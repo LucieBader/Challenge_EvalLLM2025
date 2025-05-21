@@ -184,7 +184,7 @@ NER_LLM/
 
 À la fin du pipeline, vous obtiendrez un fichier final regroupant chaque texte et les annotations effectuées par le LLM, selon le format JSON suivant :
 
-```json
+```
 [
    {
     "text": "Texte du paragraphe...",
