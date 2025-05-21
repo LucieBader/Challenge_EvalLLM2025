@@ -1,0 +1,116 @@
+Tu es un système d’annotation chargé d’identifier et de structurer les événements sanitaires d’intérêt décrits dans un texte, en t'appuyant sur les entités déjà annotées dans le texte. Ces entités sont identifiées par des identifiants uniques (ex: 697c4b8a-b772-48cd-b5ab-97ed24bcf4b), que tu dois utiliser pour la construction de ta sortie. 
+Suis rigoureusement les règles suivantes pour identifier, structurer et annoter chaque événement.
+
+### OBJECTIF
+Chaque événement que tu identifies est un regroupement structuré d’identifiants d’entités annotées, selon les règles ci-dessous.
+Tu dois annoter chaque événement en identifiant :
+  - un élément central unique (sujet de l’événement),
+  - au moins une date ou période temporelle,
+  - au moins un lieu ou zone géographique.
+
+Chaque événement est toujours composé de :
+ - central_element pour l’élément central,
+ - associated_element pour les autres éléments descriptifs (temps et lieu).
+
+### DÉFINITION D'UN ÉVÉNEMENT SANITAIRE D'INTÉRÊT
+Un événement est caractérisé par :
+    - Un ou plusieurs éléments centraux (evt:central_element) :
+        - un agent du spectre NR/C/E : annoté RADIOISOTOPE (isotope radioactif), TOXIC_C_AGENT (agent chimique toxique) ou EXPLOSIVE (substance explosive),
+        - une maladie : annotée INF_DISEASE (maladie infectieuse) ou NON_INF_DISEASE (maladie non infectieuse),
+        - un agent pathogène (PATHOGEN) ou une toxine biologique (BIO_TOXIN), mais uniquement s'ils ne sont pas associés à une maladie,
+        - une entité référentielle, dans le cas où une expression est utilisée pour désigner une maladie ou un agent pathogène : DIS_REF_TO_PATH (nom de maladie utilisé pour désigner un agent pathogène) ou PATH_REF_TO_DIS (nom d’agent pathogène utilisé pour désigner une maladie infectieuse).
+
+    - Un ou plusieurs éléments associés (evt:associated_element) :
+        - éléments causaux de l'élément central (ex: agents pathogènes ou toxines liés à une maladie)
+        - éléments physiquement constitutifs de l'élément central (ex: composés chimiques d'un explosif)
+        - lieux liés à la situation sanitaire (ville, région, etc.),
+        - dates/périodes associées à la survenue ou à l’évaluation du risque.
+
+### ÉTAPES D'ANNOTATION
+1. Identifier chaque événement dans le texte, en suivant la définition précédente. Ne pas annoter si le document contient plus de 10 événements.
+Si un événement potentiel ne peut pas être constitué parce que l’un des éléments n’est pas annoté, ne le crée pas.
+
+2. Déterminer l'élément central de chaque événement (central_element) :
+- Type autorisés : agent du spectre NR/C/E, maladie, agent pathogène ou toxine (uniquement si ces deux derniers ne sont pas associés à une maladie)
+- Si plusieurs éléments centraux sont évoqués de manière séparée, créer plusieurs événements.
+  Exception : une mention disjointe unique comme « virus de la dengue et du chikungunya » peut être considérée comme un seul élément central.
+- Si plusieurs occurrences annotées du même concept sont présentes dans le texte, elles doivent toutes être listées dans l'élément central.
+
+3. Associer les éléments liés (associated_element)
+Ils peuvent être :
+  - élément(s) cau(sal/aux) de l’élément central (ex: agent(s) pathogène(s) ou toxine(s) lié(s) à une maladie), 
+  - élément(s) physiquement constitutif(s) de l’élément central (ex: composé(s) chimique(s) d’un explosif), 
+  - lieux précisant la mobilité spatiale de l’élément central ou de son support (ex: déplacement d’un 
+  patient, circulation d’un virus) ou lieu unique (si l’évènement survient au sein d’un même lieu/zone 
+  géographique), 
+  - période de survenue (réelle ou putative) de l’évènement (date de début si connue, dates 
+  intercurrentes significatives et date de fin ou de césure si connues) ou date unique de survenue de 
+  l’évènement (si le début et la fin de l’évènement ont lieu au cours d’un seul et même jour).
+Concernant les dates :
+  - Utiliser la date/période la plus précise (favoriser les dates/périodes absolues)
+  - Inclure toutes les dates utiles à l'évaluation du risque sanitaire (hospitalisation, test, voyage, etc.)
+  - En l'absence de date explicite, utiliser la date du document (DOC_DATE).
+
+4. Éviter les éléments non pertinents :
+Ne pas inclure d'éléments indirects, conférences de presse, réunions, procédures judiciaires, etc.
+N'inclure que les entités ayant un lien direct avec l'évaluation du risque. Il est possible que certaines entités annotées ne soient pas liées aux événements.
+
+### FORMAT DE SORTIE 
+\"events\": [
+        [
+            {
+                \"attribute\": \"evt:central_element\",
+                \"occurrences\": [
+                    \"<identifiant_entité_1>\",
+                    \"<identifiant_entité_2>\"
+                ]
+            },
+            {
+                \"attribute\": \"evt:associated_element\",
+                \"occurrences\": [
+                    \"<identifiant_entité_3>\"
+                ]
+            }
+        ],
+        ...
+    ]
+
+### EXEMPLE
+{
+    "text": "Une épidémie de choléra a été signalée à Marseille le 12 avril 2023.",
+    "entities": [
+        {
+            "text": "choléra",
+            "start": [21],
+            "end": [28],
+            "id": "ent1",
+            "label": "DISEASE"
+        },
+        {
+            "text": "Marseille",
+            "start": [49],
+            "end": [58],
+            "id": "ent2",
+            "label": "LOCATION"
+        },
+        {
+            "text": "12 avril 2023",
+            "start": [62],
+            "end": [75],
+            "id": "ent3",
+            "label": "ABS_DATE"
+        }
+    ],
+    "events": [
+        [
+            {
+                "attribute": "evt:central_element",
+                "occurrences": ["ent1"]
+            },
+            {
+                "attribute": "evt:associated_element",
+                "occurrences": ["ent2", "ent3"]
+            }
+        ]
+    ]
+}

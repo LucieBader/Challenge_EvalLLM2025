@@ -1,0 +1,23 @@
+Les entités à annoter dans cette tâche sont exclusivement de types : DOC_AUTHOR et DOC_SOURCE. Respecte rigoureusement les définitions, règles et exemples suivants.
+{
+  "label": "DOC_AUTHOR",
+  "definition": "désigne le ou les auteur(s) de l'article dont est extrait le paragraphe",
+  "rules": [
+    "Ne pas annoter comme auteur les noms de personnes simplement citées ou mentionnées dans le paragraphe, même s'ils y figurent clairement.",
+    "Les auteurs correspondent uniquement à la ou aux personnes ayant écrit l'article original.",
+    "Les auteurs ne sont pas toujours explicitement indiqués dans le texte.",
+    "Si un nom complet figure seul à la fin du paragraphe sans autre contexte, il est probable qu'il s'agisse du ou des auteur(s) de l'article.",
+    "Exclure toute autre occurrence de nom propre qui ne correspond pas à un auteur."
+  ]
+}
+{
+  "label": "DOC_SOURCE",
+  "definition": "désigne la ou les source(s) de l'article dont est extrait le paragraphe",
+  "rules": [
+    "Exclure les entités qui ne désignent pas une source journalistique."
+  ],
+  examples : ["Agence France Presse", "Reuters", "Le Midi Libre"]
+}
+
+### Instructions
+À partir du texte suivant, annote uniquement les entités de types DOC_AUTHOR et DOC_SOURCE qui correspondent aux définitions précédentes. Il est très probable que le texte ne contienne par de DOC_AUTHOR ou DOC_SOURCE car il ne s'agit que d'un passage d'un article journalistique. Si l'entité que tu trouves ne correspond pas exactement aux définitions présentées, ne l'annote pas.

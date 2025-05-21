@@ -1,0 +1,49 @@
+Les entités à annoter dans cette tâche sont exclusivement de types : ABS_DATE, REL_DATE, DOC_DATE, ABS_PERIOD, REL_PERIOD et FUZZY_PERIOD. Respecte rigoureusement les définitions, règles et exemples suivants.
+IMPORTANT : Une même entité (même séquence à une position particulière dans le texte) ne doit être annotée qu’avec un seul label parmi ceux listés ci-dessus. Si une entité semble correspondre à plusieurs labels, choisis le label le plus précis ou le plus pertinent selon les définitions fournies.
+{
+  "label": "ABS_DATE",
+  "definition": "date absolue : référence à une date précise, pouvant être interprétée sans contexte.",
+  "rules": [
+    "Exclure les dates dont l'année n'est pas précisée.",
+    "Une date absolue doit obligatoirement être composée du jour, du mois et de l'année.",
+    "Inclure le jour de la semaine s'il est précisé."
+  ]
+  "examples": ["8 janvier 2015", "samedi 16 décembre 1995"]
+}
+{
+  "label": "REL_DATE",
+  "definition": "date relative : référence à un jour donné, mais nécessitant un contexte pour être interprétée.",
+  "examples": ["hier", "lundi dernier", "8 janvier"]
+}
+{
+  "label": "DOC_DATE",
+  "definition": "date du document : la date de publication ou de mise à jour de l'article duquel est issu le paragraphe. Elle peut être absolue ou relative.",
+  "example": "dans la phrase 'Publié le 10 septembre 2024 à 10h25, modifié le 10 septembre 2024', il faut annoter '10 septembre 2024' en DOC_DATE (une seule fois)."
+}
+{
+  "label": "ABS_PERIOD",
+  "definition": "période absolue : expression indiquant une plage temporelle supérieure à un jour, pouvant être interprétée sans contexte."
+  "rules": [
+    "Les années doivent obligatoirement être précisées ou implicites.",
+  ]
+  "examples": ["mars 2024", "du 1er au 3 mai 2024", "semaine 51 de 2020", "20ème siècle", (en) "1957"]
+}
+{
+  "label": "REL_PERIOD",
+  "definition": "période relative : expression indiquant une plage temporelle supérieure à un jour, délimitée dans le temps (début et fin de période identifiable), mais nécessitant un contexte pour être interprétée.",
+  "examples": ["décembre prochain", "3 derniers jours", "du 10 au 20 juillet", "la semaine dernière", (en) "octobre"]
+}
+{
+  "label": "FUZZY_PERIOD",
+  "definition": "période floue : expression indiquant une plage temporelle supérieure à un jour dont les limites ne sont pas clairement précisées et nécessitant un contexte pour être interprétée.",
+  "examples": ["fin de la semaine", "depuis plusieurs jours", "début du mois", "ces dernières années", "depuis 3 ou 4 ans"]
+}
+
+### Points d'attention
+- Ne pas annoter les heures, ni les durées. Par exemple, dans le texte "une incapacité de plus de trois mois", ne pas annoter la séquence "plus de trois mois".
+- Les dates et périodes peuvent être au format littéral ("20 mai 2024") ou numérique ("20/05/2024"). Les deux formes doivent être annotées. Dans les formes numériques, les séparateurs (barre oblique, tiret, etc.) doivent être inclus.
+- Inclure les prépositions temporelles comme "depuis" dans les annotations liées aux périodes (ex: "depuis deux mois").
+- Inclure les locutions adverbiales (ex: "il y a trois semaines").
+
+### Instructions
+À partir du texte suivant, annote uniquement les entités de types ABS_DATE, REL_DATE, DOC_DATE, ABS_PERIOD, REL_PERIOD et FUZZY_PERIOD qui correspondent aux définitions précédentes.

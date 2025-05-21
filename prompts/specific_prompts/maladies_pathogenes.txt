@@ -1,0 +1,53 @@
+Les entités à annoter dans cette tâche sont exclusivement de types : INF_DISEASE, NON_INF_DISEASE, PATHOGEN, DIS_REF_TO_PATH et PATH_REF_TO_DIS. Respecte rigoureusement les définitions, règles et exemples suivants.
+IMPORTANT : Une même entité (même séquence à une position particulière dans le texte) ne doit être annotée qu’avec un seul label parmi ceux listés ci-dessus. Si une entité semble correspondre à plusieurs labels, choisis le label le plus précis ou le plus pertinent selon les définitions fournies.
+{
+  "label": "INF_DISEASE",
+  "definition": "maladies infectieuses humaines, animales ou végétales, c’est-à-dire toutes les maladies provoquées par la pénétration dans un organisme d'un agent infectieux (bactérie, virus, parasite, prion ou champignon).",
+  "rules": [
+    "Inclure toute maladie infectieuse, même si elle n'est pas contagieuse.",
+    "Inclure les séquences contenant un nom d'agent pathogène précédé de 'infection par/à/au/le/...' ou 'maladie à' (ex: 'infection à Candida auris').
+  ]
+}
+{
+  "label": "NON_INF_DISEASE",
+  "definition": "maladies humaines, animales ou végétales, à l’exception des maladies infectieuses."
+}
+{
+  "label": "PATHOGEN",
+  "definition": "bactérie, virus, parasite, prion ou champignon pouvant être à l’origine d’une maladie infectieuse.",
+  "rules": [
+    "Exclure les termes génériques 'bactérie', 'virus', 'parasite', 'prion', 'levure', etc. qui n'ont pas de précision.",
+    "Exclure les noms d'agents pathogènes s'ils sont précédés de 'infection par/à/au/le/...' ou 'maladie à' (ex: 'infection à Candida auris'). Toute la séquence doit être annotée comme INF_DISEASE." 
+  ],
+  "examples": ["Vibrio cholerae", "E. coli"]
+}
+{
+  "label": "DIS_REF_TO_PATH",
+  "definition": "nom de maladie infectieuse utilisé pour désigner un agent pathogène.",
+  "example": {
+    "text": "de nombreux parasites tels que le paludisme",
+    "entities": [
+      {"value": "paludisme", "type": "DIS_REF_TO_PATH" car il fait référence aux parasites Plasmodium spp.}
+    ]
+  }
+}
+{
+  "label": "PATH_REF_TO_DIS",
+  "definition": "nom d’agent pathogène utilisé pour désigner une maladie infectieuse.",
+  "example": {
+    "text": "le nombre de cas de VIH est en augmentation",
+    "entities": [
+      {"value": "VIH", "type": "PATH_REF_TO_DIS" car il est utilisé pour désigner une maladie, l'infection à VIH}
+    ]
+  }
+}
+
+### Points d'attention
+- Ne pas annoter les signes et symptômes, sauf s'ils désignent une maladie dans le contexte.  Par exemple, dans la phrase "Un cas d’hépatite due au VHE", le terme "hépatite" sera annoté comme
+"INF_DISEASE", car faisant référence à une hépatite E. Par contre, dans la phrase "Le patient présentait plusieurs atteintes d’organes, dont une hépatite", le terme "hépatite", partie du tableau clinique, ne sera pas annoté.
+- Lorsqu'un nom de maladie est précédé de 'virus' (ex: 'virus de la Dengue'), il s'agit d'un agent pathogène et non d'une maladie.
+- Lorsque la maladie est associée au terme "vaccin", elle ne doit pas être annotée, comme par exemple "vaccin contre la coqueluche". Si la maladie est associée au terme "traitement", elle est annotée.
+- Pour les grippes aviaires, inclure les termes "hautement pathogène" ou "faiblement pathogène" associés à "influenza aviaire". Quand un sous-type est précisé, comme par exemple "IAHP sous-type H5N1", il ne s’agit plus d’une maladie, mais d’un agent pathogène.
+
+### Instructions
+À partir du texte suivant, annote uniquement les entités de types INF_DISEASE, NON_INF_DISEASE, PATHOGEN, DIS_REF_TO_PATH et PATH_REF_TO_DIS qui correspondent aux définitions précédentes.

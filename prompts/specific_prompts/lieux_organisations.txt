@@ -1,0 +1,50 @@
+Les entités à annoter dans cette tâche sont exclusivement de types : LOCATION, ORGANIZATION, LOC_REF_TO_ORG et ORG_REF_TO_LOC. Respecte rigoureusement les définitions, règles et exemples suivants.
+IMPORTANT : Une même entité (même séquence de texte) ne doit être annotée qu’avec un seul label parmi ceux listés ci-dessus. Si une entité semble correspondre à plusieurs labels, choisis le label le plus précis ou le plus pertinent selon les définitions fournies.
+{
+  "label": "LOCATION",
+  "definition": "zone géographique nommée (continent, pays, région, ville, quartier, rue, montagne, rivière, mer, etc.).",
+  "rules": [
+    "Exclure les lieux utilisés pour désigner, de manière métonymique ou symbolique, une entité organisationnelle (gouvernement, entreprise, etc.) dans le cadre d’actions ou de discours (qui doivent être annotés en LOC_REF_TO_ORG)."
+  ],
+  "examples": ["continent européen", "quartier sud de Chicago"]
+}
+{
+  "label": "ORGANIZATION",
+  "definition": "organisme juridique ou social pouvant être identifié sans contexte (ex : institution, entreprise, agence, organisation non gouvernementale, parti politique, armée, gouvernement, etc.).",
+  "rules": [
+    "Exclure les pays, régions, départements, préfectures, communes, etc.",
+    "Inclure les noms de lieux qui composent le nom de l'organisation, sauf s'ils ne font pas partie intégrante du nom de l'organisation (annotés dans ce cas comme LOCATION)."
+    "Inclure les noms propres désignant des installations (usines, hôtels, universités, aéroports, hôpitaux, églises, etc.)",
+    "Exclure les noms propres désignant des installations s'ils sont clairement celui du lieu et non d'une organisation.",
+    "Exclure les noms propres désignant des installations s'ils sont ceux d'une organisation mais qu'ils sont utilisés en référence au lieu où est implantée l'organisation (dans ce cas, annoter comme ORG_REF_TO_LOC).".
+  ],
+  "examples": ["Tribunal judiciaire de Paris", "hôpital Georges Pompidou", "gouvernement français"],
+}
+{
+  "label": "LOC_REF_TO_ORG",
+  "definition": "organisation désignée uniquement par un nom de lieu",
+  "rules": [
+    "Inclure tous les lieux qui ne font pas uniquement référence à un lieu géographique nommé, au sens physique et objectif du terme." 
+  ]
+  "example" : "Dans la phrase 'Paris a décidé de faire construire un nouveau métro', on annote 'Paris' comme LOC_REF_TO_ORG car on aurait pu remplacer le terme par 'la mairie de Paris'."
+}
+{
+  "label": "ORG_REF_TO_LOC",
+  "definition": "nom d’organisation utilisé pour désigner la zone géographique sur laquelle elle est implantée.",
+  "example": {
+    "text": "des fumées toxiques s’échappent de la centrale nucléaire de Tchernobyl",
+    "entities": [
+      {"value": "centrale nucléaire de Tchernobyl", "type": "ORG_REF_TO_LOC"}
+    ],
+    ["aéroport de Kuala Lumpur", "commissariat de Strasbourg"]
+  }
+}
+
+### Points d'attention
+- Ne pas annoter les noms de lieux faisant référence à un événément historique (ex: ne pas annoter "Paris 2024" si l'entité fait référence aux Jeux olympiques et paralympiques organisés à Paris en 2024).
+- Ne pas annoter les gentilés (ex: "français", "marseillais").
+- Un nom d'organisation peut être associé à un nom de lieu. Si le nom de l'organisation est composé de plusieurs termes, dont un nom de lieu, le nom de lieu doit être inclus dans l'annotation ORGANIZATION (ex: "Université de Montpellier). Si le nom de lieu de fait pas partie intégrante du nom de l'organisation, il est annoté séparément comme LOCATION (ex: dans la séquence "l'université Descartes à Paris", "université Descartes" = ORGANIZATION et "Paris" = LOCATION).
+
+
+### Instructions
+À partir du texte suivant, annote uniquement les entités de types LOCATION, ORGANIZATION, LOC_REF_TO_ORG et ORG_REF_TO_LOC qui correspondent aux définitions précédentes.

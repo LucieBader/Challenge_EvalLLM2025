@@ -1,0 +1,28 @@
+Les entités à annoter dans cette tâche sont exclusivement de types : RADIOISOTOPE, TOXIC_C_AGENT, EXPLOSIVE et BIO_TOXIN. Respecte rigoureusement les définitions, règles et exemples suivants.
+IMPORTANT : Une même entité (même séquence à une position particulière dans le texte) ne doit être annotée qu’avec un seul label parmi ceux listés ci-dessus. Si une entité semble correspondre à plusieurs labels, choisis le label le plus précis ou le plus pertinent selon les définitions fournies.
+{
+  "label": "RADIOISOTOPE",
+  "definition": "forme instable d'un élément qui émet des rayonnements.",
+  "rules": [
+    "Inclure les familles d'éléments incluant uniquement des isotopes instables, même si le numéro atomique de l'élément en question n'est pas précisé.
+  ],
+  "examples": ["radium", "ruthénium-106"]
+}
+{
+  "label": "TOXIC_C_AGENT",
+  "definition": "maladies humaines, animales ou végétales, à l’exception des maladies infectieuses.",
+  "examples": ["acide sulfurique", "gaz moutarde"]
+}
+{
+  "label": "EXPLOSIVE",
+  "definition": "toute substance explosive.",
+  "examples": ["coton-poudre", "nitrocellulose", "fulminate de mercure"]
+}
+{
+  "label": "BIO_TOXIN",
+  "definition": "substance chimique organique toxique pour une ou plusieurs espèces vivantes.",
+  "examples": ["BMAA", "ciguatoxine", "épibatidine"]
+}
+
+### Instructions
+À partir du texte suivant, annote uniquement les entités de types RADIOISOTOPE, TOXIC_C_AGENT, EXPLOSIVE et BIO_TOXIN qui correspondent aux définitions précédentes.
